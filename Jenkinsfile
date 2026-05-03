@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Menarik kode dari repositori GitHub [cite: 177, 179]
                 checkout scm
             }
         }
@@ -12,16 +11,16 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building erd project...'
-                // Karena Jenkins container standar tidak ada Haskell, kita jalankan lewat docker run sementara
-                sh 'docker run --rm -v ${WORKSPACE}:/app -w /app haskell:9.2 cabal update'
-                sh 'docker run --rm -v ${WORKSPACE}:/app -w /app haskell:9.2 cabal build'
+                // Kita pakai cabal karena ini proyek Haskell
+                sh 'cabal update'
+                sh 'cabal build'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
-                sh 'docker run --rm -v ${WORKSPACE}:/app -w /app haskell:9.2 cabal test'
+                sh 'cabal test'
             }
         }
     }
