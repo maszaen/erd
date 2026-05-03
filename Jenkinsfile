@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building erd project...' [cite: 123]
+                echo 'Building erd project...'
                 // Karena Jenkins container standar tidak ada Haskell, kita jalankan lewat docker run sementara
                 sh 'docker run --rm -v ${WORKSPACE}:/app -w /app haskell:9.2 cabal update'
                 sh 'docker run --rm -v ${WORKSPACE}:/app -w /app haskell:9.2 cabal build'
@@ -20,7 +20,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Running unit tests...' [cite: 129]
+                echo 'Running unit tests...'
                 sh 'docker run --rm -v ${WORKSPACE}:/app -w /app haskell:9.2 cabal test'
             }
         }
@@ -28,10 +28,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline completed successfully!' [cite: 216, 231]
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Pipeline failed!' [cite: 219]
+            echo 'Pipeline failed!'
         }
     }
 }
