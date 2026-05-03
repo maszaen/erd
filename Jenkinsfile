@@ -11,16 +11,17 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building erd project...'
-                // Kita pakai cabal karena ini proyek Haskell
                 sh 'cabal update'
-                sh 'cabal build'
+                // Tambahkan --allow-newer untuk memaksa build pakai library baru
+                sh 'cabal build --allow-newer'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running unit tests...'
-                sh 'cabal test'
+                // Tambahkan juga di sini
+                sh 'cabal test --allow-newer'
             }
         }
     }
